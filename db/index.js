@@ -51,6 +51,20 @@ module.exports = {
       })
     })
   },
+  verifyUser: function(username, password) {
+    let queryStr = `Select * from users where name = '${username}' AND password = '${password}'`;
+
+    return new Promise((resolve, reject) => {
+      connection.query(queryStr, (err, results) => {
+        if (err) {
+          reject(new Error(err));
+        } else {
+          resolve(results);
+        }
+      })
+
+    })
+  },
   addMessage: function(username, message) {
     let queryStr = `insert into messages (message, id_user) select '${message}', id from users where name = '${username}'`
 
@@ -63,6 +77,5 @@ module.exports = {
         }
       })
     })
-
   }
 }

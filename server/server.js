@@ -37,7 +37,16 @@ app.post('/addMessage', (req, res) => {
       console.log('userData', userData)
     })
 
+})
 
+app.post('/verifyUser', (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+
+  db.verifyUser(username, password)
+    .then((data) => {
+      console.log('data from verify', data);
+    })
 })
 
 app.listen((port), () => {

@@ -18,14 +18,51 @@ connection.connect((err, res) => {
 
 module.exports = {
   connection,
-  select: function() {
+
+  selectAllUsers: function() {
     return new Promise((resolve, reject) => {
       connection.query('select * from users', (err, res) => {
         if (err) {
           reject(err);
         }
-        resolve(res);
+          resolve(res);
       })
     })
+  },
+  selectAllMessages: function() {
+    return new Promise((resolve, reject) => {
+      connection.query('select * from messages', (err, res) => {
+        if (err) {
+          reject(err);
+        }
+          resolve(res);
+      })
+    })
+  },
+  addUser: function(username, password) {
+    return new Promise((resolve, reject) => {
+      let queryStr = `insert into users (name, password) VALUES ('${username}', '${password}')`
+      connection.query(queryStr, (err, results) => {
+        if (err) {
+          reject(new Error(err));
+        } else {
+          resolve(results)
+        }
+      })
+    })
+  },
+  addMessage: function(username, message) {
+    let queryStr = `insert into messages (message, id_user) select '${message}', id from users where name = '${username}'`
+
+    return new Promise((resolve, reject) => {
+      connection.query(queryStr, (err, results) => {
+        if (err) {
+          reject(new Error(err));
+        } else {
+          resolve(results);
+        }
+      })
+    })
+
   }
 }

@@ -39,12 +39,17 @@ app.post('/addMessage', (req, res) => {
 })
 
 app.post('/verifyUser', (req, res) => {
-  let username = req.body.username;
-  let password = req.body.password;
+  let username = req.body.loginUsername;
+  let password = req.body.loginPassword;
+
+  console.log(req.body)
 
   db.verifyUser(username, password)
     .then((data) => {
-      console.log('data from verify', data);
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
     })
 })
 

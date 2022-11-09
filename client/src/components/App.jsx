@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Login from './Login.jsx';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,6 +15,22 @@ class App extends React.Component {
 
   login(userInfo) {
     console.log('user info in app login', userInfo)
+    axios({
+      method: 'post',
+      url: '/verifyUser',
+      data: userInfo
+    })
+    .then((response) => {
+
+      if (response.data.length !== 0) {
+        this.setState({
+          loggedIn: true
+        })
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   signUp(userInfo) {

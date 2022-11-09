@@ -10,15 +10,18 @@ app.use(bodyParser.json());
 
 app.post('/addUser', (req, res) => {
   console.log(req.body);
-  let userName = req.body.user;
-  let password = req.body.password;
+  let userName = req.body.signUsername;
+  let password = req.body.signPassword;
 
   db.addUser(userName, password)
     .then((response) => {
       return db.selectAllUsers();
     })
     .then((userData) => {
-      console.log('userData', userData)
+      res.send(userData)
+    })
+    .catch((err) => {
+      res.send(500);
     })
 
 })
@@ -42,8 +45,6 @@ app.post('/verifyUser', (req, res) => {
   let username = req.body.loginUsername;
   let password = req.body.loginPassword;
 
-  console.log(req.body)
-
   db.verifyUser(username, password)
     .then((data) => {
       res.send(data);
@@ -57,6 +58,9 @@ app.get('/allMessages', (req, res) => {
   db.selectAllMessages()
     .then((messages) => {
       res.send(messages)
+    })
+    .catch((err) => {
+      cosole.log(err);
     })
 })
 

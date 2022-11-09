@@ -26,6 +26,7 @@ class Messages extends React.Component {
               return (
                 <div>
                 <h1>message</h1>
+                <h2>from: {message.name}</h2>
                 <p>{message.message}</p>
                 </div>
 

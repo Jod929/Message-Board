@@ -38,6 +38,20 @@ class App extends React.Component {
 
   signUp(userInfo) {
     console.log('user info in app signUp', userInfo)
+    axios({
+      method: 'post',
+      url: '/addUser',
+      data: userInfo
+    })
+    .then((response) => {
+      console.log('res from sign uo', response)
+      this.setState({
+        loggedIn: true
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   getAllMessage() {
@@ -51,6 +65,9 @@ class App extends React.Component {
       this.setState({
         messages: messageArr
       })
+    })
+    .catch((err) => {
+      console.log(err);
     })
   }
 

@@ -31,7 +31,9 @@ module.exports = {
   },
   selectAllMessages: function() {
     return new Promise((resolve, reject) => {
-      connection.query('select * from messages', (err, res) => {
+      let queryStr = `select * from messages inner join users on users.id = messages.id_user`
+
+      connection.query(queryStr, (err, res) => {
         if (err) {
           reject(err);
         }

@@ -9,7 +9,8 @@ class App extends React.Component {
 
     this.state = {
       loggedIn: false,
-      messages: []
+      messages: [],
+      currentUser: ''
     }
     this.login = this.login.bind(this);
     this.signUp = this.signUp.bind(this);
@@ -27,8 +28,10 @@ class App extends React.Component {
 
       if (response.data.length !== 0) {
         this.setState({
-          loggedIn: true
+          loggedIn: true,
+          currentUser: userInfo.loginUsername
         })
+        console.log('thisState', this.state);
       }
     })
     .catch((err) => {
@@ -46,8 +49,10 @@ class App extends React.Component {
     .then((response) => {
       console.log('res from sign uo', response)
       this.setState({
-        loggedIn: true
+        loggedIn: true,
+        currentUser: userInfo.signUsername
       })
+      console.log('thisState', this.state);
     })
     .catch((err) => {
       console.log(err);

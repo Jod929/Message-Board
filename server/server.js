@@ -56,7 +56,7 @@ app.post('/verifyUser', (req, res) => {
 app.get('/allMessages', (req, res) => {
   db.selectAllMessages()
     .then((messages) => {
-      console.log('all messages', messages);
+      res.send(messages)
     })
 })
 

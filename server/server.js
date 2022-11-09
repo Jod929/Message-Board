@@ -21,7 +21,6 @@ app.post('/addUser', (req, res) => {
       console.log('userData', userData)
     })
 
-
 })
 
 app.post('/addMessage', (req, res) => {
@@ -46,6 +45,13 @@ app.post('/verifyUser', (req, res) => {
   db.verifyUser(username, password)
     .then((data) => {
       console.log('data from verify', data);
+    })
+})
+
+app.get('/allMessages', (req, res) => {
+  db.selectAllMessages()
+    .then((messages) => {
+      console.log('all messages', messages);
     })
 })
 

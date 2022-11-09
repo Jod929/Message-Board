@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Login from './Login.jsx';
 import Messages from './Messages.jsx';
+import Post from './Post.jsx';
 import axios from 'axios';
 
 class App extends React.Component {
@@ -15,6 +16,7 @@ class App extends React.Component {
     this.login = this.login.bind(this);
     this.signUp = this.signUp.bind(this);
     this.getAllMessage = this.getAllMessage.bind(this);
+    this.postMessage = this.postMessage.bind(this);
   }
 
   login(userInfo) {
@@ -76,6 +78,22 @@ class App extends React.Component {
     })
   }
 
+  postMessage(userInfo) {
+    console.log('tryinf to post a message', userInfo)
+    axios({
+      method: 'post',
+      url: '/postMessage',
+      data: userInfo
+    })
+    .then((response) => {
+      let messageArr = response.data;
+
+      this.setState({
+        messages: messageArr
+      })
+    })
+  }
+
   render() {
    if (!this.state.loggedIn) {
     return (
@@ -87,6 +105,7 @@ class App extends React.Component {
    } else {
     return (
       <div>
+        <Post user={this.state.currentUser} postMessage={this.postMessage}/>
         <Messages getAllMessage={this.getAllMessage} messages={this.state.messages}/>
       </div>
     )

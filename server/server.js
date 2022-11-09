@@ -54,6 +54,22 @@ app.post('/verifyUser', (req, res) => {
     })
 })
 
+app.post('/postMessage', (req, res) => {
+  let username = req.body.username;
+  let message = req.body.message;
+
+  db.addMessage(username, message)
+    .then((data) => {
+      return db.selectAllMessages();
+    })
+    .then((messages) => {
+      res.send(messages);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+})
+
 app.get('/allMessages', (req, res) => {
   db.selectAllMessages()
     .then((messages) => {

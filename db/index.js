@@ -92,5 +92,21 @@ module.exports = {
         }
       })
     })
+  },
+  editMessage(username, oldMessage, newMessage) {
+    let queryStr = `update messages set message = '${newMessage}' where message = '${oldMessage}'`;
+
+    return new Promise((resolve, reject) => {
+      connection.query(queryStr, (err, results) => {
+        if (err) {
+          reject(new Error(err))
+        } else {
+          resolve(results);
+        }
+      })
+    })
+
+
+
   }
 }

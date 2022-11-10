@@ -97,6 +97,20 @@ app.post('/deleteMessage', (req, res) => {
     })
 })
 
+app.put('/editMessage', (req, res) => {
+  // username, oldMessage, newMessage
+  db.editMessage(req.body.username, req.body.oldMessage, req.body.newMessage)
+    .then((response) => {
+      return db.selectAllMessages()
+    })
+    .then((messages) => {
+      res.send(messages);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+})
+
 app.listen((port), () => {
   console.log('server listening on port: ', port);
 })

@@ -40,7 +40,6 @@ class Messages extends React.Component {
               if (this.props.currentUser === message.name) {
                 return (
                   <div>
-                  <h1>message</h1>
                   <h2>from: {message.name}</h2>
                   <p>{message.message}</p>
                   <button onClick={() => this.handleClick(message.name, message.message)}>Delete</button>
@@ -49,7 +48,6 @@ class Messages extends React.Component {
               } else {
                 return (
                   <div>
-                    <h1>message</h1>
                     <h2>from: {message.name}</h2>
                     <p>{message.message}</p>
                   </div>

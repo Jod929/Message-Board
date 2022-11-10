@@ -18,6 +18,7 @@ class App extends React.Component {
     this.getAllMessage = this.getAllMessage.bind(this);
     this.postMessage = this.postMessage.bind(this);
     this.deleteMessage = this.deleteMessage.bind(this);
+    this.editMessage = this.editMessage.bind(this);
   }
 
   login(userInfo) {
@@ -113,6 +114,30 @@ class App extends React.Component {
     })
   }
 
+  editMessage(messageInfo) {
+    console.log(messageInfo)
+    let editInfo = {
+      username: messageInfo.name,
+      oldMessage: messageInfo.oldMessage,
+      newMessage: messageInfo.newMessage
+    }
+
+    axios({
+      method: 'put',
+      url: '/editMessage',
+      data: editInfo
+    })
+    .then((response) => {
+      let messages = response.data;
+      this.setState({
+        messages: messages
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
   render() {
    if (!this.state.loggedIn) {
     return (
@@ -126,7 +151,7 @@ class App extends React.Component {
     return (
       <div>
         <Post user={this.state.currentUser} postMessage={this.postMessage}/>
-        <Messages getAllMessage={this.getAllMessage} deleteMessage={this.deleteMessage} messages={this.state.messages} currentUser={this.state.currentUser}/>
+        <Messages getAllMessage={this.getAllMessage} deleteMessage={this.deleteMessage} editMessage={this.editMessage} messages={this.state.messages} currentUser={this.state.currentUser}/>
       </div>
     )
    }

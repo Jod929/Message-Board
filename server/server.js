@@ -80,6 +80,23 @@ app.get('/allMessages', (req, res) => {
     })
 })
 
+app.post('/deleteMessage', (req, res) => {
+
+  let name = req.body.name;
+  let message = req.body.message;
+
+  db.deleteMessage(name, message)
+    .then((response) => {
+      return db.selectAllMessages();
+    })
+    .then((messages) => {
+      res.send(messages)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+})
+
 app.listen((port), () => {
   console.log('server listening on port: ', port);
 })

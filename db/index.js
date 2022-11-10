@@ -79,5 +79,18 @@ module.exports = {
         }
       })
     })
+  },
+  deleteMessage(username, message) {
+    let queryStr = `delete from messages where message = '${message}' limit 1`;
+
+    return new Promise((resolve, reject) => {
+      connection.query(queryStr, (err, results) => {
+        if (err) {
+          reject(new Error(err));
+        } else {
+          resolve(results);
+        }
+      })
+    })
   }
 }

@@ -17,10 +17,11 @@ class App extends React.Component {
     this.signUp = this.signUp.bind(this);
     this.getAllMessage = this.getAllMessage.bind(this);
     this.postMessage = this.postMessage.bind(this);
+    this.deleteMessage = this.deleteMessage.bind(this);
   }
 
   login(userInfo) {
-    console.log('user info in app login', userInfo)
+
     axios({
       method: 'post',
       url: '/verifyUser',
@@ -33,7 +34,7 @@ class App extends React.Component {
           loggedIn: true,
           currentUser: userInfo.loginUsername
         })
-        console.log('thisState', this.state);
+
       }
     })
     .catch((err) => {
@@ -67,7 +68,6 @@ class App extends React.Component {
       url: '/allMessages'
     })
     .then((response) => {
-      console.log('all messages', response)
       let messageArr = response.data;
       this.setState({
         messages: messageArr
@@ -79,7 +79,7 @@ class App extends React.Component {
   }
 
   postMessage(userInfo) {
-    console.log('tryinf to post a message', userInfo)
+
     axios({
       method: 'post',
       url: '/postMessage',
@@ -94,11 +94,31 @@ class App extends React.Component {
     })
   }
 
+  deleteMessage(messageInfo) {
+    // console.log('message Info', messageInfo);
+    axios({
+      method: 'post',
+      url: '/deleteMessage',
+      data: messageInfo
+    })
+    .then((response) => {
+      let messages = response.data;
+
+      this.setState({
+        messages: messages
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
   render() {
    if (!this.state.loggedIn) {
     return (
       <div>
          <Login login={this.login} signUp={this.signUp}/>
+         <Messages getAllMessage={this.getAllMessage} deleteMessage={this.deleteMessage} messages={this.state.messages} />
       </div>
 
     )
@@ -106,11 +126,12 @@ class App extends React.Component {
     return (
       <div>
         <Post user={this.state.currentUser} postMessage={this.postMessage}/>
-        <Messages getAllMessage={this.getAllMessage} messages={this.state.messages}/>
+        <Messages getAllMessage={this.getAllMessage} deleteMessage={this.deleteMessage} messages={this.state.messages} currentUser={this.state.currentUser}/>
       </div>
     )
    }
   }
+
 }
 
 export default App;
